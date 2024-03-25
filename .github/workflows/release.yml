@@ -54,16 +54,16 @@ jobs:
     strategy:
       matrix:
         config:
-          - os: ubuntu-20.04
-            kernel_path: "../../../siyuan-android/app/libs/kernel.aar"
-            target: "android"
           # - os: ubuntu-20.04
-          #   kernel_path: "../app/kernel-linux/SiYuan-Kernel"
-          #   build_args: "-s -w -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
-          #   electron_args: "dist-linux"
-          #   goos: "linux"
-          #   goarch: "amd64"
-          #   suffix: "linux.tar.gz"
+          #   kernel_path: "../../../siyuan-android/app/libs/kernel.aar"
+          #   target: "android"
+          - os: ubuntu-20.04
+            kernel_path: "../app/kernel-linux/SiYuan-Kernel"
+            build_args: "-s -w -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
+            electron_args: "dist-linux"
+            goos: "linux"
+            goarch: "amd64"
+            suffix: "linux.tar.gz"
           # - os: macos-latest
           #   kernel_path: "../app/kernel-darwin/SiYuan-Kernel"
           #   build_args: "-s -w -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
