@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: version check
         id: version
+        env:
+          env_var: ${{ vars.GITHUB_REPOSITORY }}
         run: |
           # 获取已经 release 的版本
           releasedVersion=$(wget -qO- -t3 -T30 "https://api.github.com/repos/shang-demo/siyuan-patch/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
@@ -23,15 +25,13 @@ jobs:
           packageVersion=$(wget -qO- -t3 -T30 "https://raw.githubusercontent.com/siyuan-note/siyuan/master/app/package.json" | grep "version" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
           # 设置输出
           if [ "${releasedVersion}" = "${packageVersion}" ]; then
-            echo "same"
-            echo "::set-output name=release_version::0"
+            echo "release_version=0" >> $GITHUB_OUTPUT 
           else
-            echo "not-same"
-            echo "::set-output name=release_version::${packageVersion}"
-            # echo "${packageVersion}"
+            echo "release_version=${packageVersion}" >> $GITHUB_OUTPUT 
           fi
+
           echo "vars GITHUB_REPOSITORY: ${{ github.GITHUB_REPOSITORY }}"
-          echo "env: ${{ vars }}"
+          echo "env: $env_var"
           echo "releasedVersion: ${releasedVersion}"
           echo "packageVersion: ${packageVersion}"
 
