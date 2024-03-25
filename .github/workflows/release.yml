@@ -20,7 +20,7 @@ jobs:
           env_var: ${{ vars.GITHUB_REPOSITORY }}
         run: |
           # 获取已经 release 的版本
-          releasedVersion=$(wget -qO- -t3 -T30 "https://api.github.com/repos/shang-demo/siyuan-patch/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+          releasedVersion=$(wget -qO- -t3 -T30 "https://api.github.com/repos/${GITHUB_REPOSITORY_OWNER}/siyuan-patch/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
           # 获取最新代码的版本
           packageVersion=$(wget -qO- -t3 -T30 "https://raw.githubusercontent.com/siyuan-note/siyuan/master/app/package.json" | grep "version" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
           # 设置输出
@@ -30,7 +30,7 @@ jobs:
             echo "release_version=${packageVersion}" >> $GITHUB_OUTPUT 
           fi
 
-          echo "vars GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          echo "vars GITHUB_REPOSITORY: ${GITHUB_REPOSITORY_OWNER}"
           echo "releasedVersion: ${releasedVersion}"
           echo "packageVersion: ${packageVersion}"
 
@@ -53,9 +53,9 @@ jobs:
     strategy:
       matrix:
         config:
-          # - os: ubuntu-20.04
-          #   kernel_path: "../../../siyuan-android/app/libs/kernel.aar"
-          #   target: "android"
+          - os: ubuntu-20.04
+            kernel_path: "../../../siyuan-android/app/libs/kernel.aar"
+            target: "android"
           - os: ubuntu-20.04
             kernel_path: "../app/kernel-linux/SiYuan-Kernel"
             build_args: "-s -w -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
@@ -63,29 +63,29 @@ jobs:
             goos: "linux"
             goarch: "amd64"
             suffix: "linux.tar.gz"
-          # - os: macos-latest
-          #   kernel_path: "../app/kernel-darwin/SiYuan-Kernel"
-          #   build_args: "-s -w -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
-          #   electron_args: "dist-darwin"
-          #   goos: "darwin"
-          #   goarch: "amd64"
-          #   suffix: "mac.dmg"
-          # - os: macos-latest
-          #   kernel_path: "../app/kernel-darwin-arm64/SiYuan-Kernel"
-          #   build_args: "-s -w -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
-          #   electron_args: "dist-darwin-arm64"
-          #   goos: "darwin"
-          #   goarch: "arm64"
-          #   suffix: "mac-arm64.dmg"
-          # - os: windows-2019
-          #   kernel_path: "../app/kernel/SiYuan-Kernel.exe"
-          #   build_args: "-s -w -H=windowsgui -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
-          #   electron_args: "dist"
-          #   goos: "windows"
-          #   gobin: "bin"
-          #   mingwsys: "MINGW64"
-          #   goarch: "amd64"
-          #   suffix: "win.exe"
+          - os: macos-latest
+            kernel_path: "../app/kernel-darwin/SiYuan-Kernel"
+            build_args: "-s -w -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
+            electron_args: "dist-darwin"
+            goos: "darwin"
+            goarch: "amd64"
+            suffix: "mac.dmg"
+          - os: macos-latest
+            kernel_path: "../app/kernel-darwin-arm64/SiYuan-Kernel"
+            build_args: "-s -w -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
+            electron_args: "dist-darwin-arm64"
+            goos: "darwin"
+            goarch: "arm64"
+            suffix: "mac-arm64.dmg"
+          - os: windows-2019
+            kernel_path: "../app/kernel/SiYuan-Kernel.exe"
+            build_args: "-s -w -H=windowsgui -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
+            electron_args: "dist"
+            goos: "windows"
+            gobin: "bin"
+            mingwsys: "MINGW64"
+            goarch: "amd64"
+            suffix: "win.exe"
 
     steps:
       - uses: actions/checkout@v3
