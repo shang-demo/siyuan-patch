@@ -20,7 +20,7 @@ jobs:
           DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
         run: |
           # 获取已经 release 的版本
-          releasedVersion=$(wget -qO- -t3 -T30 "https://api.github.com/repos/${{ secrets.DOCKER_HUB_USER }}/siyuan-patch/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+          releasedVersion=$(wget -qO- -t3 -T30 "https://api.github.com/repos/shang-demo/siyuan-patch/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
           # 获取最新代码的版本
           packageVersion=$(wget -qO- -t3 -T30 "https://raw.githubusercontent.com/siyuan-note/siyuan/master/app/package.json" | grep "version" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
           # 设置输出
@@ -32,7 +32,7 @@ jobs:
             echo "::set-output name=release_version::${packageVersion}"
             # echo "${packageVersion}"
           fi
-          echo ${{ secrets.DOCKER_HUB_USER }}
+          echo ${{ env.DOCKER_HUB_USER }}
           echo "releasedVersion: ${releasedVersion}"
           echo "packageVersion: ${packageVersion}"
 
