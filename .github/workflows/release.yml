@@ -25,11 +25,16 @@ jobs:
           packageVersion=$(wget -qO- -t3 -T30 "https://raw.githubusercontent.com/siyuan-note/siyuan/master/app/package.json" | grep "version" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
           # 设置输出
           if [ "${releasedVersion}" = "${packageVersion}" ]; then
+            echo "same"
             echo "::set-output name=release_version::0"
           else
+            echo "not-same"
             echo "::set-output name=release_version::${packageVersion}"
             # echo "${packageVersion}"
           fi
+          echo ${{ secrets.DOCKER_HUB_USER }}
+          echo "releasedVersion: ${releasedVersion}"
+          echo "packageVersion: ${packageVersion}"
 
       - name: Create Release
         id: create_release
@@ -51,14 +56,8 @@ jobs:
       matrix:
         config:
           - os: ubuntu-20.04
-            kernel_path: "../app/kernel-linux/SiYuan-Kernel"
-            build_args: "-s -w -X github.com/siyuan-note/siyuan/kernel/util.Mode=prod"
-            electron_args: "dist-linux"
-            goos: "linux"
-            goarch: "amd64"
-            suffix: "linux.tar.gz"
-
-       
+            kernel_path: "../../../siyuan-android/app/libs/kernel.aar"
+            target: "android"
 
     steps:
       - uses: actions/checkout@v3
