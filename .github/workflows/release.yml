@@ -30,8 +30,7 @@ jobs:
             echo "release_version=${packageVersion}" >> $GITHUB_OUTPUT 
           fi
 
-          echo "vars GITHUB_REPOSITORY: ${{ github.GITHUB_REPOSITORY }}"
-          echo "env: $env_var"
+          echo "vars GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
           echo "releasedVersion: ${releasedVersion}"
           echo "packageVersion: ${packageVersion}"
 
