@@ -10,6 +10,7 @@ jobs:
   create_release:
     name: get version and create release
     runs-on: ubuntu-latest
+    continue-on-error: true
     outputs:
       version: ${{ steps.version.outputs.release_version }}
       upload_url: ${{ steps.create_release.outputs.upload_url }}
