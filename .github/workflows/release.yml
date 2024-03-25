@@ -33,6 +33,7 @@ jobs:
             # echo "${packageVersion}"
           fi
           echo "GITHUB_REPOSITORY_OWNER: ${{ vars.GITHUB_REPOSITORY_OWNER }}"
+          echo "env GITHUB_REPOSITORY_OWNER: ${{ env.GITHUB_REPOSITORY_OWNER }}"
           echo "releasedVersion: ${releasedVersion}"
           echo "packageVersion: ${packageVersion}"
 
