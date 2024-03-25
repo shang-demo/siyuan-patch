@@ -20,7 +20,7 @@ jobs:
           GITHUB_REPOSITORY_OWNER: ${{ vars.GITHUB_REPOSITORY_OWNER }}
         run: |
           # 获取已经 release 的版本
-          releasedVersion=$(wget -qO- -t3 -T30 "https://api.github.com/repos/${{ vars.GITHUB_REPOSITORY_OWNER }}/siyuan-patch/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+          releasedVersion=$(wget -qO- -t3 -T30 "https://api.github.com/repos/${{ github.GITHUB_REPOSITORY_OWNER }}/siyuan-patch/releases/latest" | grep "tag_name" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
           # 获取最新代码的版本
           packageVersion=$(wget -qO- -t3 -T30 "https://raw.githubusercontent.com/siyuan-note/siyuan/master/app/package.json" | grep "version" | head -n 1 | awk -F ":" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
           # 设置输出
@@ -32,7 +32,7 @@ jobs:
             echo "::set-output name=release_version::${packageVersion}"
             # echo "${packageVersion}"
           fi
-          echo "GITHUB_REPOSITORY_OWNER: ${{ vars.GITHUB_REPOSITORY_OWNER }}"
+          echo "GITHUB_REPOSITORY_OWNER: ${{ github.GITHUB_REPOSITORY_OWNER }}"
           echo "env GITHUB_REPOSITORY_OWNER: ${{ env.GITHUB_REPOSITORY_OWNER }}"
           echo "releasedVersion: ${releasedVersion}"
           echo "packageVersion: ${packageVersion}"
