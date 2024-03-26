@@ -1,4 +1,4 @@
-name: release electron
+name: release-pc
 
 on:
   workflow_dispatch:
