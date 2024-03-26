@@ -1,4 +1,4 @@
-name: release android
+name: release-android
 
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
         run: |
           cd ${{ github.workspace }}/siyuan-note/
 
-          git clone --depth=1 https://github.com/siyuan-note/siyuan.git
+          git clone --branch v${{ github.event.inputs.version }} --depth=1 https://github.com/siyuan-note/siyuan.git
           cd siyuan
 
           git apply ${{ github.workspace }}/siyuan-note/patches/siyuan/disable-update.patch
@@ -36,7 +36,7 @@ jobs:
 
           cd ..
 
-          git clone --depth=1 https://github.com/siyuan-note/siyuan-android.git
+          git clone --branch v${{ github.event.inputs.version }} --depth=1 https://github.com/siyuan-note/siyuan-android.git
           cd siyuan-android
 
           git apply ${{ github.workspace }}/siyuan-note/patches/siyuan-android/debug-build.patch
@@ -119,7 +119,7 @@ jobs:
       - uses: joutvhu/get-release@v1
         id: get_current_release
         with:
-          tag_name: ${{ github.event.inputs.environment }}
+          tag_name: ${{ github.event.inputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -130,6 +130,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.get_current_release.outputs.upload_url }}
-          asset_name: siyuan-${{ github.event.inputs.environment }}-android-arm64
+          asset_name: siyuan-${{ github.event.inputs.version }}-android-arm64
           asset_path: ${{ github.workspace }}/siyuan-note/siyuan-android/app/build/outputs/apk/debug/app-debug.apk
           asset_content_type: application/octet-stream
