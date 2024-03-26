@@ -10,7 +10,6 @@ jobs:
   create_release:
     name: get version and create release
     runs-on: ubuntu-latest
-    continue-on-error: true
     outputs:
       version: ${{ steps.version.outputs.release_version }}
       upload_url: ${{ steps.create_release.outputs.upload_url }}
@@ -50,6 +49,7 @@ jobs:
     runs-on: ${{ matrix.config.os }}
     needs: create_release
     if: ${{ needs.create_release.outputs.version != '0' }}
+    continue-on-error: true
     strategy:
       matrix:
         config:
