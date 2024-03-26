@@ -1,4 +1,4 @@
-name: release android and electron
+name: release android
 
 on:
   workflow_dispatch:
