@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: test1
         run: |
-          echo ${{ github.event.inputs.environment }}
+          echo ${{ github.event.inputs.version }}
 
       - uses: joutvhu/get-release@v1
         id: get_current_release_2
@@ -36,7 +36,7 @@ jobs:
       - uses: joutvhu/get-release@v1
         id: get_current_release
         with:
-          tag_name: ${{ github.event.inputs.environment }}
+          tag_name: ${{ github.event.inputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
