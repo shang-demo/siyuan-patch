@@ -13,4 +13,4 @@ jobs:
     steps:
       - name: test1
         run: |
-          curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/shang-demo/siyuan-patch/actions/workflows/release-pc/dispatches" -d '{"ref": "main", "inputs": {"version": "3.0.4"}}'
+          curl -X POST -H "Accept: application/vnd.github.v3+json" -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/shang-demo/siyuan-patch/actions/workflows/release-android/dispatches" -d '{"ref": "main", "inputs": {"version": "3.0.4"}}'
