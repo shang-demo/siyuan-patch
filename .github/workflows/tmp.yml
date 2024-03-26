@@ -1,0 +1,45 @@
+name: tmp
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "release version/tag"
+        required: true
+
+jobs:
+  build:
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      matrix:
+        config:
+          - os: ubuntu-20.04
+            kernel_path: "../../../siyuan-android/app/libs/kernel.aar"
+            target: "android"
+
+    steps:
+      - name: test1
+        run: |
+          echo ${{ github.event.inputs.environment }}
+
+      - uses: joutvhu/get-release@v1
+        id: get_current_release_2
+        with:
+          tag_name: 3.0.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: test2
+        run: |
+          echo ${{ steps.get_current_release_2.outputs.upload_url }}
+
+      - uses: joutvhu/get-release@v1
+        id: get_current_release
+        with:
+          tag_name: ${{ github.event.inputs.environment }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: test3
+        run: |
+          echo ${{ steps.get_current_release.outputs.upload_url }}
