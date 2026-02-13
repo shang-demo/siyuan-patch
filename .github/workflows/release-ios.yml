@@ -95,7 +95,7 @@ jobs:
         working-directory: ${{ github.workspace }}/siyuan-note/siyuan-ios
         run: |
           mkdir -p ../siyuan-ios-out/Payload
-          xcodebuild -workspace ./siyuan-ios.xcodeproj/project.xcworkspace -scheme siyuan-ios -sdk iphoneos -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -derivedDataPath ../siyuan-ios-out
+          xcodebuild -workspace ./siyuan-ios.xcodeproj/project.xcworkspace -scheme siyuan-ios -sdk iphoneos -configuration Release OTHER_SWIFT_FLAGS="-Onone" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -derivedDataPath ../siyuan-ios-out
           mv ../siyuan-ios-out/Build/Products/Release-iphoneos/siyuan-ios.app ../siyuan-ios-out/Payload
           cd ../siyuan-ios-out
           zip -r Payload.zip Payload
