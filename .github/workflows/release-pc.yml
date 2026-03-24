@@ -138,6 +138,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Prepare asset suffix
+        id: prepare
+        run: |
+          # 去掉开头的 v
+          SUFFIX="${{ github.event.inputs.version }}"
+          ASSET_SUFFIX="${SUFFIX#v}"
+          echo "asset_suffix=${ASSET_SUFFIX}" >> $GITHUB_OUTPUT
+          echo "Original: $SUFFIX -> Asset: $ASSET_SUFFIX"
+    
       - name: Upload Electron App
         uses: shogo82148/actions-upload-release-asset@v1
         env:
@@ -145,5 +154,5 @@ jobs:
         with:
           upload_url: ${{ steps.get_current_release.outputs.upload_url }}
           asset_name: siyuan-${{ github.event.inputs.version }}-${{ matrix.config.suffix }}
-          asset_path: ${{ github.workspace }}/siyuan-note/siyuan/app/build/siyuan-${{ replace(github.event.inputs.version, 'v', '') }}-${{ matrix.config.suffix }}
+          asset_path: ${{ github.workspace }}/siyuan-note/siyuan/app/build/siyuan-${{ steps.prepare.outputs.asset_suffix }}-${{ matrix.config.suffix }}
           asset_content_type: application/octet-stream
