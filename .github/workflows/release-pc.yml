@@ -145,5 +145,5 @@ jobs:
         with:
           upload_url: ${{ steps.get_current_release.outputs.upload_url }}
           asset_name: siyuan-${{ github.event.inputs.version }}-${{ matrix.config.suffix }}
-          asset_path: ${{ github.workspace }}/siyuan-note/siyuan/app/build/siyuan-*-${{ matrix.config.suffix }}
+          asset_path: ${{ github.workspace }}/siyuan-note/siyuan/app/build/siyuan-${{ replace(github.event.inputs.version, 'v', '') }}-${{ matrix.config.suffix }}
           asset_content_type: application/octet-stream
